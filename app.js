@@ -3,9 +3,19 @@ const statusEl = document.getElementById('status');
 
 let mediaRecorder;
 let audioChunks = [];
+let N8N_WEBHOOK_URL = '';
 
-// WEBHOOK DO N8N (Coloquei a base do seu dominio, você pode ajustar o path no n8n)
-const N8N_WEBHOOK_URL = 'https://n8n.lkaoyj.easypanel.host/webhook/voice-to-vikunja';
+// Load webhook URL from config injected by container
+fetch('/config.json')
+    .then(res => res.json())
+    .then(config => {
+        N8N_WEBHOOK_URL = config.N8N_WEBHOOK_URL;
+        console.log('Webhook URL loaded:', N8N_WEBHOOK_URL);
+    })
+    .catch(err => {
+        console.error('Failed to load config.json', err);
+        statusEl.textContent = 'Erro de configuração do servidor.';
+    });
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(console.error);
@@ -27,12 +37,17 @@ async function setupAudio() {
         };
         statusEl.textContent = 'Pronto para gravar';
     } catch (err) {
-        statusEl.textContent = 'Erro: Permita o uso do microfone nas configurações do site.';
+        statusEl.textContent = 'Erro: Permita o uso do microfone nas configurações.';
         console.error(err);
     }
 }
 
 async function sendAudioToN8n(blob) {
+    if (!N8N_WEBHOOK_URL) {
+        statusEl.textContent = 'URL do Webhook não configurada.';
+        return;
+    }
+
     statusEl.textContent = 'Enviando para a IA... ⏳';
     recordBtn.classList.remove('bg-red-500');
     recordBtn.classList.add('bg-gray-600');
@@ -63,7 +78,6 @@ async function sendAudioToN8n(blob) {
     }
 }
 
-// Touch/Mouse Events
 const startRecording = (e) => {
     e.preventDefault();
     if (!mediaRecorder || mediaRecorder.state === 'recording') return;
