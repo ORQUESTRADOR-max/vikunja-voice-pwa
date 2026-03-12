@@ -2,13 +2,27 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Meta tags estritas para comportamento App-like -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Vikunja Voice">
+    <meta name="theme-color" content="#111827">
+    
     <title>Vikunja Voice</title>
+    
     <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.svg">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { -webkit-tap-highlight-color: transparent; touch-action: none; }
+        body { 
+            -webkit-tap-highlight-color: transparent; 
+            touch-action: none; 
+            overscroll-behavior-y: none; /* Impede o 'puxar para recarregar' do Chrome */
+        }
         .recording { animation: pulse 1.5s infinite; }
         @keyframes pulse { 
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 
@@ -17,7 +31,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white h-screen flex flex-col items-center justify-center overflow-hidden">
+<body class="bg-gray-900 text-white h-screen w-screen flex flex-col items-center justify-center overflow-hidden fixed">
     <div class="text-center mb-12">
         <h1 class="text-3xl font-bold mb-2 text-blue-400">Vikunja Voice</h1>
         <p class="text-gray-400 text-sm">Segure para gravar suas tarefas</p>
