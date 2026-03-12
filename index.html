@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tags estritas para comportamento App-like -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,8 +11,9 @@
     
     <title>Vikunja Voice</title>
     
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.svg">
+    <!-- Cache buster -->
+    <link rel="manifest" href="manifest.json?v=3">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/ORQUESTRADOR-max/vikunja-voice-pwa/master/icon-192.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -21,7 +21,7 @@
         body { 
             -webkit-tap-highlight-color: transparent; 
             touch-action: none; 
-            overscroll-behavior-y: none; /* Impede o 'puxar para recarregar' do Chrome */
+            overscroll-behavior-y: none;
         }
         .recording { animation: pulse 1.5s infinite; }
         @keyframes pulse { 
@@ -43,6 +43,6 @@
 
     <div id="status" class="mt-8 text-gray-300 font-medium h-6 text-center px-4">Pronto para gravar</div>
     
-    <script src="app.js"></script>
+    <script src="app.js?v=2"></script>
 </body>
 </html>
